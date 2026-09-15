@@ -1,147 +1,91 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+document.addEventListener("DOMContentLoaded", () => {
+  const menuButton = document.querySelector(".mobile-menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
 
-    mobileMenuToggle.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        this.classList.toggle('active');
+  if (menuButton && navLinks) {
+    menuButton.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("active");
+      menuButton.classList.toggle("active", open);
+      menuButton.setAttribute("aria-expanded", String(open));
+      menuButton.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
     });
 
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+        menuButton.classList.remove("active");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Open navigation menu");
+      });
     });
+  }
 
-    // // Circuit animation
-    // const canvas = document.getElementById('circuit-animation');
-    // const ctx = canvas.getContext('2d');
-
-    // canvas.width = canvas.offsetWidth;
-    // canvas.height = canvas.offsetHeight;
-
-    // const points = [];
-    // const lines = [];
-
-    // function createPoints() {
-    //     const numPoints = 50;
-    //     for (let i = 0; i < numPoints; i++) {
-    //         points.push({
-    //             x: Math.random() * canvas.width,
-    //             y: Math.random() * canvas.height,
-    //             vx: (Math.random() - 0.5) * 0.5,
-    //             vy: (Math.random() - 0.5) * 0.5
-    //         });
-    //     }
-    // }
-
-    // function createLines() {
-    //     for (let i = 0; i < points.length; i++) {
-    //         for (let j = i + 1; j < points.length; j++) {
-    //             if (Math.random() < 0.1) {
-    //                 lines.push({ start: i, end: j });
-    //             }
-    //         }
-    //     }
-    // }
-
-    // function animate() {
-    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    //     points.forEach(point => {
-    //         point.x += point.vx;
-    //         point.y += point.vy;
-
-    //         if (point.x < 0 || point.x > canvas.width) point.vx *= -1;
-    //         if (point.y < 0 || point.y > canvas.height) point.vy *= -1;
-    //     });
-
-    //     ctx.strokeStyle = '#8CC63F';
-    //     ctx.lineWidth = 0.5;
-    //     lines.forEach(line => {
-    //         const start = points[line.start];
-    //         const end = points[line.end];
-    //         const dx = end.x - start.x;
-    //         const dy = end.y - start.y;
-    //         const distance = Math.sqrt(dx * dx + dy * dy);
-            
-    //         if (distance < 150) {
-    //             ctx.globalAlpha = 1 - distance / 150;
-    //             ctx.beginPath();
-    //             ctx.moveTo(start.x, start.y);
-    //             ctx.lineTo(end.x, end.y);
-    //             ctx.stroke();
-    //         }
-    //     });
-
-    //     ctx.fillStyle = '#8CC63F';
-    //     ctx.globalAlpha = 1;
-    //     points.forEach(point => {
-    //         ctx.beginPath();
-    //         ctx.arc(point.x, point.y, 2, 0, Math.PI * 2);
-    //         ctx.fill();
-    //     });
-
-    //     requestAnimationFrame(animate);
-    // }
-
-    // createPoints();
-    // createLines();
-    // animate();
-
-    // Intersection Observer for fade-in animations
-    const fadeElements = document.querySelectorAll('.fade-in');
-    const fadeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                fadeObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    fadeElements.forEach(element => {
-        fadeObserver.observe(element);
+  // Smooth scrolling with fixed-header offset.
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", event => {
+      const target = document.querySelector(anchor.getAttribute("href"));
+      if (!target) return;
+      event.preventDefault();
+      const headerHeight = document.querySelector(".site-header")?.offsetHeight || 0;
+      const y = target.getBoundingClientRect().top + window.scrollY - headerHeight + 1;
+      window.scrollTo({ top: y, behavior: "smooth" });
     });
+  });
 
-    // Form submission
-    const contactForm = document.querySelector('.contact-form');
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Here you would typically send the form data to a server
-        alert('Thank you for your message. We will get back to you soon!');
-        this.reset();
+  // Reveal sections/cards as they enter the viewport.
+  const revealItems = document.querySelectorAll(
+    ".service-card, .tech-item, .portfolio-item, .member-card, .hero-content, .section-kicker, .section-description"
+  );
+  revealItems.forEach(el => el.classList.add("fade-in"));
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealItems.forEach(el => observer.observe(el));
+  } else {
+    revealItems.forEach(el => el.classList.add("visible"));
+  }
+
+  // Highlight the current navigation item.
+  const sections = [...document.querySelectorAll("main section[id]")];
+  const navAnchors = [...document.querySelectorAll(".nav-links a")];
+  const updateActiveNav = () => {
+    const scrollPosition = window.scrollY + 130;
+    let current = "home";
+    sections.forEach(section => {
+      if (scrollPosition >= section.offsetTop) current = section.id;
     });
-});
+    navAnchors.forEach(a => a.classList.toggle("active", a.getAttribute("href") === `#${current}`));
+  };
+  window.addEventListener("scroll", updateActiveNav, { passive: true });
+  updateActiveNav();
 
-// Add this to the end of your existing script.js file
-
-// Update current year in footer
-document.getElementById('current-year').textContent = new Date().getFullYear();
-
-// Newsletter form submission
-const newsletterForm = document.getElementById('newsletter-form');
-newsletterForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const email = this.querySelector('input[type="email"]').value;
-    // Here you would typically send the email to your server or newsletter service
-    console.log('Subscribing email:', email);
-    alert('Thank you for subscribing to our newsletter!');
-    this.reset();
-});
-
-// Smooth scrolling for footer links
-document.querySelectorAll('.footer-links a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+  // Contact form demo feedback.
+  const contactForm = document.querySelector(".contact-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", event => {
+      event.preventDefault();
+      alert("Thanks for reaching out! We’ll get back to you soon.");
+      contactForm.reset();
     });
+  }
+
+  // Newsletter demo feedback.
+  const newsletterForm = document.getElementById("newsletter-form");
+  if (newsletterForm) {
+    newsletterForm.addEventListener("submit", event => {
+      event.preventDefault();
+      alert("Thanks for subscribing!");
+      newsletterForm.reset();
+    });
+  }
+
+  const year = document.getElementById("current-year");
+  if (year) year.textContent = new Date().getFullYear();
 });

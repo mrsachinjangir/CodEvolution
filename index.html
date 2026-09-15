@@ -3,7 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CodEvolution - Web & Mobile App Development Services</title>
+    <meta name="description" content="CodEvolution builds modern, scalable web and mobile applications for ambitious businesses." />
+    <meta name="theme-color" content="#0b1220" />
+    <title>CodEvolution | Web & Mobile App Development</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
   </head>
@@ -16,13 +21,15 @@
           </a>
         </div>
         <ul class="nav-links">
+          <li><a class="active" href="#home">Home</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#technologies">Technologies</a></li>
-          <li><a href="#portfolio">Blog</a></li>
-          <li><a href="#hire-us">Hire Us</a></li>
-          <li><a href="#contact">About Us</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#hire-us">Team</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
-        <button class="mobile-menu-toggle">
+        <a class="nav-cta" href="#contact">Let's Talk <i class="fas fa-arrow-up-right-from-square"></i></a>
+        <button class="mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
           <span></span>
           <span></span>
           <span></span>
@@ -34,18 +41,24 @@
       <section id="home" class="hero">
         <div class="container">
           <div class="hero-content">
+            <div class="hero-badge"><span></span> Digital products, engineered for growth</div>
             <h1>
-              Building Future-Ready Mobile & Web App
-              <span class="highlight">Development Services</span>
+              We build <span class="highlight">digital experiences</span>
+              that move businesses forward.
             </h1>
             <p>
-              <strong>CodEvolution</strong> is a globally identified mobile and
-              web application development company with boundless mobility
-              solutions and esteemed on-demand apps.
+              CodEvolution creates high-performance web and mobile applications
+              with thoughtful UX, modern engineering and scalable technology.
             </p>
-            <a href="#contact" class="cta-button"
-              >Get in touch <i class="fas fa-arrow-right"></i
-            ></a>
+            <div class="hero-actions">
+              <a href="#contact" class="cta-button">Start a project <i class="fas fa-arrow-right"></i></a>
+              <a href="#portfolio" class="secondary-button">View our work <i class="fas fa-arrow-down"></i></a>
+            </div>
+            <div class="hero-proof">
+              <div><strong>Web</strong><span>Modern applications</span></div>
+              <div><strong>Mobile</strong><span>iOS & Android</span></div>
+              <div><strong>UI/UX</strong><span>Human-centered design</span></div>
+            </div>
           </div>
           <div class="hero-animation">
             <img
@@ -60,7 +73,7 @@
 
       <section id="services" class="services">
         <div class="container">
-          <h2>Engineering <span class="highlight">Services</span></h2>
+          <p class="section-kicker">What we do</p><h2>Engineering <span class="highlight">Services</span></h2>
           <p class="section-description">
             CodEvolution offers highly scalable, customized and functional web
             design, web development, mobile app development and digital
@@ -107,7 +120,7 @@
 
       <section id="technologies" class="technologies">
         <div class="container">
-          <h2>Technologies We <span class="highlight">Excel In</span></h2>
+          <p class="section-kicker">Our toolkit</p><h2>Technologies We <span class="highlight">Excel In</span></h2>
           <div class="tech-grid">
             <div class="tech-item">
               <!-- <img src="img/React-icon.svg" alt="React"> -->
@@ -310,7 +323,7 @@
 
       <section id="portfolio" class="portfolio">
         <div class="container">
-          <h2>Our <span class="highlight">Portfolio</span></h2>
+          <p class="section-kicker">Selected work</p><h2>Our <span class="highlight">Portfolio</span></h2>
           <div class="portfolio-grid">
             <div class="portfolio-item">
               <img
@@ -411,8 +424,8 @@
             </div>
         </section> -->
       <!-- Team Member 1 -->
-      <section id="hire-us">
-        <h1 style="text-align: center; padding: 20px">Meet Our Team</h1>
+      <section id="hire-us" class="team-section">
+        <div class="container"><p class="section-kicker">The people behind the work</p><h2>Meet Our <span class="highlight">Team</span></h2>
         <div class="team">
           <!-- Team Member 1 -->
           <div class="member-card">
@@ -436,11 +449,12 @@
             <p>vinay@codevolution.com</p>
           </div>
         </div>
+        </div>
       </section>
 
       <section id="contact" class="contact">
         <div class="container">
-          <h2>Get In <span class="highlight">Touch</span></h2>
+          <p class="section-kicker">Have a project in mind?</p><h2>Let’s <span class="highlight">Talk</span></h2>
           <div class="contact-grid">
             <form class="contact-form">
               <input type="text" placeholder="Your Name" required />
@@ -455,16 +469,16 @@
                 solutions for businesses worldwide.
               </p>
               <div class="social-links">
-                <a href="#" aria-label="Facebook"
+                <a href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener"
                   ><i class="fab fa-facebook"></i
                 ></a>
-                <a href="#" aria-label="Twitter"
+                <a href="https://x.com/" aria-label="X" target="_blank" rel="noopener"
                   ><i class="fab fa-twitter"></i
                 ></a>
-                <a href="#" aria-label="LinkedIn"
+                <a href="https://www.linkedin.com/" aria-label="LinkedIn" target="_blank" rel="noopener"
                   ><i class="fab fa-linkedin"></i
                 ></a>
-                <a href="#" aria-label="Instagram"
+                <a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener"
                   ><i class="fab fa-instagram"></i
                 ></a>
               </div>
